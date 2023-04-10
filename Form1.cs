@@ -44,6 +44,12 @@ namespace WindowsFormsApp12
                 rect.Y = Math.Min(startPoint.Y, e.Y);
                 rect.Width = Math.Abs(startPoint.X - e.X);
                 rect.Height = Math.Abs(startPoint.Y - e.Y);
+                // 将矩形的坐标参数写入4个textbox控件里
+                textBoxX1.Text = String.Format("x:  {0}  y: {1}  width: {2} height: {3}", rect.X, rect.Y, rect.Width, rect.Height);
+                textBoxX2.Text = rect.X.ToString();
+                textBoxY2.Text = rect.Y.ToString();
+                textBoxWidth2.Text = rect.Width.ToString();
+                textBoxHeight2.Text = rect.Height.ToString();
                 textBoxX1.Text = String.Format("x:  {0}  y: {1}  width: {2} height: {3}", rect.X, rect.Y, rect.Width, rect.Height);
                 // 将画布重置为原始图片
                 bitmap = new Bitmap(pictureBox1.Width, pictureBox1.Height);
@@ -64,6 +70,33 @@ namespace WindowsFormsApp12
         {
             drawing = false;
 
+            //// Get the coordinates of the rectangle
+            //int x = rect.X;
+            //int y = rect.Y;
+            //int width = rect.Width;
+            //int height = rect.Height;
+
+            //// Create a new image with the same dimensions as the rectangle
+            //Bitmap croppedImage = new Bitmap(/*new Bitmap(@"D:\work\develop\杨铭交接\MAX-100上位机交接资料\右侧模块图片\right\MAX100-XT-AI2 AO1.png"), */width, height);
+            //// Copy the contents of the rectangle from the original image to the new image
+            //using (Graphics g = Graphics.FromImage(croppedImage))
+            //{
+            //    g.DrawImage(pictureBox1.Image, new Rectangle(0, 0, width, height), new Rectangle(x, y, width, height), GraphicsUnit.Pixel);
+            //}
+
+            //// Set the new image as the image of a PictureBox
+            //PictureBox newPictureBox = new PictureBox();
+            //newPictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
+            //newPictureBox.Location = new Point(x, y);
+            //newPictureBox.Size = new Size(width, height);
+            //newPictureBox.Image = croppedImage;
+
+            //// Add the new PictureBox to the form
+            //pictureBox1.Controls.Add(newPictureBox);
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
             // Get the coordinates of the rectangle
             int x = rect.X;
             int y = rect.Y;
@@ -71,7 +104,7 @@ namespace WindowsFormsApp12
             int height = rect.Height;
 
             // Create a new image with the same dimensions as the rectangle
-            Bitmap croppedImage = new Bitmap(new Bitmap(@"D:\work\develop\杨铭交接\MAX-100上位机交接资料\右侧模块图片\right\MAX100-XT-AI2 AO1.png"), width, height);
+            Bitmap croppedImage = new Bitmap(new Bitmap(@"C:\Users\nzqsi7\source\repos\WindowsFormsApp12\greenlight.png"), width, height);
             // Copy the contents of the rectangle from the original image to the new image
             using (Graphics g = Graphics.FromImage(croppedImage))
             {
@@ -87,6 +120,44 @@ namespace WindowsFormsApp12
 
             // Add the new PictureBox to the form
             pictureBox1.Controls.Add(newPictureBox);
+
+            pictureBox1.Invalidate();
+        }
+
+        PictureBox newPictureBoxRed;
+        private void button2_Click(object sender, EventArgs e)
+        {
+            // Get the coordinates of the rectangle
+            int x = rect.X;
+            int y = rect.Y;
+            int width = rect.Width;
+            int height = rect.Height;
+
+            // Create a new image with the same dimensions as the rectangle
+            Bitmap croppedImage = new Bitmap(new Bitmap(@"C:\Users\nzqsi7\source\repos\WindowsFormsApp12\redlight.png"), width, height);
+            // Copy the contents of the rectangle from the original image to the new image
+            using (Graphics g = Graphics.FromImage(croppedImage))
+            {
+                g.DrawImage(pictureBox1.Image, new Rectangle(0, 0, width, height), new Rectangle(x, y, width, height), GraphicsUnit.Pixel);
+            }
+
+            // Set the new image as the image of a PictureBox
+            newPictureBoxRed = new PictureBox();
+            newPictureBoxRed.SizeMode = PictureBoxSizeMode.StretchImage;
+            newPictureBoxRed.Location = new Point(x, y);
+            newPictureBoxRed.Size = new Size(width, height);
+            newPictureBoxRed.Image = croppedImage;
+
+            // Add the new PictureBox to the form
+            pictureBox1.Controls.Add(newPictureBoxRed);
+
+            pictureBox1.Invalidate();
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            pictureBox1.Controls.Remove(newPictureBoxRed);
+            newPictureBoxRed.Hide();
         }
     }
 }
